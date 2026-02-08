@@ -57,5 +57,9 @@ Resolution: Re-architected the data model to focus on environmental offsets rath
 ├── visuals/
 │   └── dashboard_screenshot.png      # Power BI Preview
 └── README.md                         # Project Documentation
+
+
+
+
 👤 Author
 [DARSHANA PAWAR] Data Analyst | Specialized in Power Platform & Agritech Sustainability Based in Pune, India

@@ -1,5 +1,8 @@
-*Carbon Credit Optimization & Compliance Intelligence*
+Carbon Credit Optimization & Compliance Intelligence
+
 🌍 Agritech & Sustainability Data Analytics Project
+
+
 📌 Project Overview
 This project focuses on managing and analyzing primary data environments for carbon credit trading. By leveraging Python-based ETL processes, the system identifies emission gaps, tracks market price volatility, and calculates potential cost savings for industrial and agricultural compliance.
 

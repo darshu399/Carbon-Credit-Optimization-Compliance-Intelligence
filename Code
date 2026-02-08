@@ -1,0 +1,48 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+
+# 1. LINK THE DATA
+# Ensure you have uploaded the file using the 'Folder' icon on the left
+file_name = 'carbon_credit_dataset.csv'
+file_path = '/bin/X11/carbon_credit_dataset.csv'
+
+if os.path.exists(file_path):
+    df = pd.read_csv(file_path)
+    print("✅ CSV Data Linked Successfully!")
+
+    # 2. ETL & DATA PREPARATION
+    df['Date'] = pd.to_datetime(df['Date'])
+    # Metric: Emission Gap (Crucial for trading decisions)
+    df['Emission_Gap'] = df['Emission_Produced_tCO2'] - df['Emission_Allowance_tCO2']
+
+    # 3. ADVANCED VISUALS (The "Dashboard" Output)
+    plt.figure(figsize=(20, 10))
+    sns.set_style("whitegrid")
+
+    # Chart 1: Industry Performance (Bar Chart)
+    plt.subplot(1, 2, 1)
+    industry_impact = df.groupby('Industry_Type')['Emission_Gap'].mean().sort_values()
+    colors = ['#2ecc71' if x < 0 else '#e74c3c' for x in industry_impact]
+    industry_impact.plot(kind='barh', color=colors)
+    plt.title('Industry Emission Gap (Negative = Surplus Credits)', fontsize=15)
+    plt.xlabel('Average tCO2 Gap')
+
+    # Chart 2: Price Trend vs. Cost (Dual Analysis)
+    plt.subplot(1, 2, 2)
+    df_trend = df.sort_values('Date').resample('M', on='Date')['Carbon_Price_USD_per_t'].mean()
+    plt.plot(df_trend.index, df_trend.values, color='#3498db', linewidth=3, marker='o')
+    plt.fill_between(df_trend.index, df_trend.values, color='#3498db', alpha=0.1)
+    plt.title('Market Intelligence: Carbon Price Volatility', fontsize=15)
+    plt.ylabel('USD per Ton')
+
+    plt.tight_layout()
+    plt.show()
+
+    # 4. EXPORT FOR POWER BI
+    df.to_csv('/content/Cleaned_Carbon_Data_Final.csv', index=False)
+    print("🚀 Cleaned file saved! Download 'Cleaned_Carbon_Data_Final.csv' from the sidebar.")
+
+else:
+    print(f"❌ File not found. Please ensure the file in your sidebar is named exactly: {file_name}")
